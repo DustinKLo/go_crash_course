@@ -18,6 +18,7 @@ type logEntry struct {
 }
 
 var logCh = make(chan logEntry, 50)
+var doneCh = make(chan struct{}) // signal only channel, zero memory allocation
 
 func main() {
 	go logger()
@@ -28,7 +29,12 @@ func main() {
 }
 
 func logger() {
-	for entry := range logCh {
-		fmt.Printf("%v - [%v] %v\n", entry.time.Format("2006-01-02T15:04:05"), entry.severity, entry.message)
+	for {
+		select {
+		case entry := <-logCh:
+			fmt.Printf("%v - [%v] %v\n", entry.time.Format("2006-01-02T15:04:05"), entry.severity, entry.message)
+		case <-doneCh:
+			break
+		}
 	}
 }
