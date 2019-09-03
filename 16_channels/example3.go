@@ -26,6 +26,7 @@ func main() {
 
 	logCh <- logEntry{time.Now(), logInfo, "app is shutting down"}
 	time.Sleep(100 * time.Millisecond)
+	doneCh <- struct{}{}
 }
 
 func logger() {
