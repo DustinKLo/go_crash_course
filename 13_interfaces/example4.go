@@ -9,6 +9,9 @@ func main() {
 	var wc WriterCloser = NewBufferedWriterCloser()
 	wc.Write([]byte("Hello youtube listeners, this is a test"))
 	wc.Close()
+
+	bwc := wc.(*BufferedWriterCloser) // casting to a BufferedWriterCloser
+	fmt.Println(bwc)
 }
 
 type Writer interface {
