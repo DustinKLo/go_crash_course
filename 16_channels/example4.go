@@ -13,7 +13,8 @@ const (
 )
 
 type logEntry struct {
-	time     time.Time
+	time time.Time
+
 	severity string
 	message  string
 }
